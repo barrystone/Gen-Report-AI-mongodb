@@ -23,6 +23,8 @@
     "express": "^4.19.2",
     "mongoose": "^8.5.3",
     "node-cron": "^3.0.3",
-    "openai": "^4.55.7"
+    "openai": "^4.55.7",
+    "reflect-metadata": "^0.2.2",
+    "typedi": "^0.10.0"
   }
 }

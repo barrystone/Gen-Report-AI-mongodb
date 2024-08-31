@@ -1,15 +1,16 @@
 import { Router } from 'express';
-import { getReport, generateReport } from '../services/reportService';
-import {
-  fetchCodingRecord,
-  getCodingRecord
-} from '../services/codingRecordService';
+import ReportService from '../services/ReportService';
+import CodingRecordService from '../services/CodingRecordService';
+import Container from 'typedi';
 
 const router = Router();
 
-router.get('/report', getReport);
-router.get('/codingRecord', getCodingRecord);
-router.post('/generateReport', generateReport);
-router.post('/fetchCodingRecord', fetchCodingRecord);
+const reportService = Container.get(ReportService);
+const codingRecordService = Container.get(CodingRecordService);
+
+router.get('/report', reportService.getReport);
+router.get('/codingRecord', codingRecordService.getCodingRecord);
+router.post('/generateReport', reportService.generateReport);
+router.post('/fetchCodingRecord', codingRecordService.fetchCodingRecord);
 
 export default router;

@@ -1,58 +1,61 @@
+// import { Service } from 'typedi';
 // import { GoogleGenerativeAI } from '@google/generative-ai';
 // import dotenv from 'dotenv';
+// import Env from './Env';
 
 // dotenv.config();
 
-// // 創建 Google Generative AI 客戶端
-
-// if (!process.env.GEMINI_API_KEY) {
-//     throw new Error('GEMINI_API_KEY is not set');
-// }
-
-// const client = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
-// // Extend the ModelParams type to include the prompt property
 // interface ExtendedModelParams {
-//     model: string;
-//     prompt: string;
-//     temperature: number;
-//     maxOutputTokens: number;
+//   model: string;
+//   prompt: string;
+//   temperature: number;
+//   maxOutputTokens: number;
 // }
 
-// // 產生摘要
-// export async function generateSummary(data: string): Promise<string> {
-//     try {
-//         const params: ExtendedModelParams = {
-//             model: 'models/text-bison-001', // 生成文本的模型名稱
-//             prompt: `Summarize the following coding activity: ${data}`,
-//             temperature: 0.5, // 控制生成的隨機性
-//             maxOutputTokens: 150 // 最大輸出 token 數量
-//         };
+// @Service()
+// export default class GeminiService {
+//   private client: GoogleGenerativeAI;
 
-//         const response = await client.getGenerativeModel(params);
-
-//         return response.
-//     } catch (error) {
-//         console.error('generateSummary Error:', error);
-//         throw error;
+//   constructor(private readonly env: Env) {
+//     if (!this.env.GEMINI_API_KEY) {
+//       throw new Error('GEMINI_API_KEY is not set');
 //     }
-// }
+//     this.client = new GoogleGenerativeAI(this.env.GEMINI_API_KEY);
+//   }
 
-// // 產生預測
-// export async function generatePrediction(data: string): Promise<string> {
+//   async generateSummary(data: string): Promise<string> {
 //     try {
-//         const params: ExtendedModelParams = {
-//             model: 'models/text-bison-001', // 預測的模型名稱
-//             prompt: `Predict future coding trends based on: ${data}`,
-//             temperature: 0.7, // 更高的隨機性以產生預測
-//             maxOutputTokens: 150
-//         };
+//       const params: ExtendedModelParams = {
+//         model: 'models/text-bison-001',
+//         prompt: `Summarize the following coding activity: ${data}`,
+//         temperature: 0.5,
+//         maxOutputTokens: 150
+//       };
 
-//         const response = await client.getGenerativeModel(params);
-
-//         return response.candidates[0]?.output?.trim() || 'No prediction generated';
+//       const response = await this.client.getGenerativeModel(params);
+//       return response.candidates[0]?.output?.trim() || 'No summary generated';
 //     } catch (error) {
-//         console.error('generatePrediction Error:', error);
-//         throw error;
+//       console.error('generateSummary Error:', error);
+//       throw error;
 //     }
+//   }
+
+//   async generatePrediction(data: string): Promise<string> {
+//     try {
+//       const params: ExtendedModelParams = {
+//         model: 'models/text-bison-001',
+//         prompt: `Predict future coding trends based on: ${data}`,
+//         temperature: 0.7,
+//         maxOutputTokens: 150
+//       };
+
+//       const response = await this.client.getGenerativeModel(params);
+//       return (
+//         response.candidates[0]?.output?.trim() || 'No prediction generated'
+//       );
+//     } catch (error) {
+//       console.error('generatePrediction Error:', error);
+//       throw error;
+//     }
+//   }
 // }
